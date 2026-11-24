@@ -1,6 +1,6 @@
 # Ambient SFT experiment progress
 
-Updated 2026-11-24 22:34 +08:00
+Updated 2026-11-24 22:48 +08:00
 
 - [x] Re-evaluate IFEval at 512 output tokens using the three existing checkpoints and compare against their 2,048-token results.
 - [x] Prepare one fixed Dolci train and holdout split for the larger comparison.
@@ -14,7 +14,7 @@ The larger comparison uses Qwen3-0.6B-Base, a 384-token training limit, one exam
 
 - [x] Benchmark the original Qwen3-1.7B-Base checkpoint on IFEval and GSM8K.
 - [x] Verify the single-GPU full-parameter training path with BF16 weights, 8-bit AdamW state, and a frozen CPU teacher.
-- [~] Train and evaluate SFT, T=1 distillation, and T=2.5 Ambient SFT for 2,048 updates each at seed 42.
+- [~] Train and evaluate SFT, T=1 distillation, and T=2.5 Ambient SFT for 2,048 updates each at seed 42. SFT is complete and T=1 is training.
 - [ ] Verify and publish the full comparison and its relationship to the prior 0.6B results and the paper's baselines.
 
 The three 1.7B runs reuse the pinned 4,000/256 Dolci split, 384-token limit, one example per update, and linear schedule from the completed 0.6B comparison. They use the same 8-bit optimizer and BF16 weights across all three conditions.
@@ -32,3 +32,4 @@ The three 1.7B runs reuse the pinned 4,000/256 Dolci split, 384-token limit, one
 - 2026-11-24 22:08 +08:00 — Finished and verified all nine full benchmark runs. The final report includes mean scores, per-seed deltas, matching branch schedules, and checkpoints verified by SHA-256.
 - 2026-11-24 22:29 +08:00 — Started the independent 1.7B base evaluation and prepared the full-parameter single-GPU run.
 - 2026-11-24 22:34 +08:00 — The 1.7B base scored 34.38% on IFEval and 52.24% on GSM8K. The full-parameter runner passed both branches and held-out evaluation in a 12-step CUDA test. Started the 2,048-step comparison.
+- 2026-11-24 22:48 +08:00 — SFT finished and scored 47.32% on IFEval and 52.31% on GSM8K. The T=1 full-parameter run is active.
