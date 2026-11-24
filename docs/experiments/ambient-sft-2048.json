@@ -1,0 +1,575 @@
+{
+  "planned_seeds": [
+    42,
+    43,
+    44
+  ],
+  "completed_seeds": [
+    42
+  ],
+  "training_code_commit": "5d4ea14be94d13ad4679e97e3db0c0d416ac369c",
+  "documented_benchmark_code_commit": "4280d0420156d5e56977bde304689959029c850d",
+  "training_split": {
+    "dataset": "allenai/Dolci-Instruct-SFT",
+    "revision": "bd3c8f3a9b2cc5a9682e44b96ddd0bb2ff027221",
+    "shard": "data/train-00000-of-00015.parquet",
+    "train": {
+      "rows": 4000,
+      "sha256": "1cffb7f45f1b41042de9bac50b518a6895abbe672559c96fefd87ef988ef472d"
+    },
+    "eval": {
+      "rows": 256,
+      "sha256": "2cefeb59d5bf522fef43d53df8d2ce94cf29b7011e3ee9043323a297667acfd6"
+    },
+    "excluded_exact_user_turn_overlap": {
+      "ifeval": 0,
+      "gsm8k": 0
+    },
+    "composition": {
+      "train_candidate": {
+        "domains": {
+          "Chat": 22,
+          "Coding": 1028,
+          "Math": 776,
+          "Multilingual": 294,
+          "Other": 799,
+          "Precise IF": 406,
+          "Safety": 331,
+          "Science": 344
+        },
+        "sources": {
+          "Aya": 294,
+          "CoCoNot": 22,
+          "Dolci Instruct OpenThoughts3+ Science": 332,
+          "Dolci Instruct Precise IF": 406,
+          "Dolci Instruct Python Algorithms": 571,
+          "Evol CodeAlpaca": 352,
+          "FLAN": 280,
+          "Logic Puzzles": 501,
+          "OpenAssistant": 22,
+          "OpenMathInstruct 2": 140,
+          "SciRiff": 12,
+          "TableGPT": 18,
+          "Tulu 3 Persona Algebra": 52,
+          "Tulu 3 Persona GSM": 128,
+          "Tulu 3 Persona MATH": 456,
+          "Tulu 3 Persona Python": 105,
+          "WildGuardMix": 160,
+          "WildJailbreak": 149
+        }
+      },
+      "train_usable": {
+        "domains": {
+          "Chat": 22,
+          "Coding": 962,
+          "Math": 718,
+          "Multilingual": 278,
+          "Other": 465,
+          "Precise IF": 366,
+          "Safety": 327,
+          "Science": 252
+        },
+        "sources": {
+          "Aya": 278,
+          "CoCoNot": 22,
+          "Dolci Instruct OpenThoughts3+ Science": 248,
+          "Dolci Instruct Precise IF": 366,
+          "Dolci Instruct Python Algorithms": 553,
+          "Evol CodeAlpaca": 308,
+          "FLAN": 202,
+          "Logic Puzzles": 256,
+          "OpenAssistant": 22,
+          "OpenMathInstruct 2": 140,
+          "SciRiff": 4,
+          "TableGPT": 7,
+          "Tulu 3 Persona Algebra": 52,
+          "Tulu 3 Persona GSM": 128,
+          "Tulu 3 Persona MATH": 398,
+          "Tulu 3 Persona Python": 101,
+          "WildGuardMix": 156,
+          "WildJailbreak": 149
+        }
+      },
+      "first_2048_by_seed": {
+        "42": {
+          "domains": {
+            "Chat": 13,
+            "Coding": 581,
+            "Math": 437,
+            "Multilingual": 169,
+            "Other": 276,
+            "Precise IF": 230,
+            "Safety": 196,
+            "Science": 146
+          },
+          "sources": {
+            "Aya": 169,
+            "CoCoNot": 15,
+            "Dolci Instruct OpenThoughts3+ Science": 143,
+            "Dolci Instruct Precise IF": 230,
+            "Dolci Instruct Python Algorithms": 324,
+            "Evol CodeAlpaca": 199,
+            "FLAN": 124,
+            "Logic Puzzles": 146,
+            "OpenAssistant": 13,
+            "OpenMathInstruct 2": 76,
+            "SciRiff": 3,
+            "TableGPT": 6,
+            "Tulu 3 Persona Algebra": 23,
+            "Tulu 3 Persona GSM": 79,
+            "Tulu 3 Persona MATH": 259,
+            "Tulu 3 Persona Python": 58,
+            "WildGuardMix": 89,
+            "WildJailbreak": 92
+          }
+        },
+        "43": {
+          "domains": {
+            "Chat": 12,
+            "Coding": 600,
+            "Math": 426,
+            "Multilingual": 157,
+            "Other": 297,
+            "Precise IF": 216,
+            "Safety": 187,
+            "Science": 153
+          },
+          "sources": {
+            "Aya": 157,
+            "CoCoNot": 18,
+            "Dolci Instruct OpenThoughts3+ Science": 149,
+            "Dolci Instruct Precise IF": 216,
+            "Dolci Instruct Python Algorithms": 336,
+            "Evol CodeAlpaca": 200,
+            "FLAN": 120,
+            "Logic Puzzles": 171,
+            "OpenAssistant": 12,
+            "OpenMathInstruct 2": 81,
+            "SciRiff": 4,
+            "TableGPT": 6,
+            "Tulu 3 Persona Algebra": 32,
+            "Tulu 3 Persona GSM": 83,
+            "Tulu 3 Persona MATH": 230,
+            "Tulu 3 Persona Python": 64,
+            "WildGuardMix": 87,
+            "WildJailbreak": 82
+          }
+        },
+        "44": {
+          "domains": {
+            "Chat": 13,
+            "Coding": 571,
+            "Math": 437,
+            "Multilingual": 163,
+            "Other": 281,
+            "Precise IF": 222,
+            "Safety": 202,
+            "Science": 159
+          },
+          "sources": {
+            "Aya": 163,
+            "CoCoNot": 14,
+            "Dolci Instruct OpenThoughts3+ Science": 157,
+            "Dolci Instruct Precise IF": 222,
+            "Dolci Instruct Python Algorithms": 317,
+            "Evol CodeAlpaca": 199,
+            "FLAN": 113,
+            "Logic Puzzles": 164,
+            "OpenAssistant": 13,
+            "OpenMathInstruct 2": 91,
+            "SciRiff": 2,
+            "TableGPT": 4,
+            "Tulu 3 Persona Algebra": 28,
+            "Tulu 3 Persona GSM": 83,
+            "Tulu 3 Persona MATH": 235,
+            "Tulu 3 Persona Python": 55,
+            "WildGuardMix": 96,
+            "WildJailbreak": 92
+          }
+        }
+      }
+    }
+  },
+  "evaluations": {
+    "backend": "vLLM 0.21.0, FlashAttention, BF16, greedy",
+    "ifeval": {
+      "prompts": 541,
+      "max_generation_tokens": 2048,
+      "fewshot": 0
+    },
+    "gsm8k": {
+      "prompts": 1319,
+      "max_generation_tokens": 512,
+      "fewshot": 8
+    }
+  },
+  "per_seed": {
+    "42": {
+      "presented_supervised_tokens": 283968,
+      "training": {
+        "sft": {
+          "branches": {
+            "clean": 2048,
+            "matching": 0
+          },
+          "clean_probability": 1.0,
+          "device": "cuda",
+          "eval_after": {
+            "nll": 1.628169149649281,
+            "tokens": 31245
+          },
+          "eval_before": {
+            "nll": 1.2830140461634019,
+            "tokens": 31245
+          },
+          "gpu": "NVIDIA GeForce RTX 5070 Ti",
+          "learning_rate": 8e-05,
+          "max_length": 384,
+          "mode": "sft",
+          "model": "work/models/qwen3-0.6b-base",
+          "peak_allocated_gib": 10.307455062866211,
+          "peak_reserved_gib": 11.732421875,
+          "revision": "da87bfb608c14b7cf20ba1ce41287e8de496c0cd",
+          "schedule": "linear",
+          "seed": 42,
+          "steps": 2048,
+          "temperature": 2.5,
+          "torch": "2.11.0+cu130",
+          "train": {
+            "rows": 4000,
+            "sha256": "1cffb7f45f1b41042de9bac50b518a6895abbe672559c96fefd87ef988ef472d",
+            "usable": 3390
+          },
+          "train_seconds": 344.17136779997963,
+          "validation": {
+            "rows": 256,
+            "sha256": "2cefeb59d5bf522fef43d53df8d2ce94cf29b7011e3ee9043323a297667acfd6",
+            "usable": 226
+          },
+          "warmup_steps": 61,
+          "checkpoint_sha256": "202f0f5cee5f2c10d8d64888e25ec9f660fd803301a39c53bf2c16e0908a4bb6"
+        },
+        "kd": {
+          "branches": {
+            "clean": 1562,
+            "matching": 486
+          },
+          "clean_probability": 0.75,
+          "device": "cuda",
+          "eval_after": {
+            "nll": 1.5806165143268016,
+            "tokens": 31245
+          },
+          "eval_before": {
+            "nll": 1.2830140461634019,
+            "tokens": 31245
+          },
+          "gpu": "NVIDIA GeForce RTX 5070 Ti",
+          "learning_rate": 8e-05,
+          "max_length": 384,
+          "mode": "ambient",
+          "model": "work/models/qwen3-0.6b-base",
+          "peak_allocated_gib": 11.409031867980957,
+          "peak_reserved_gib": 12.8515625,
+          "revision": "da87bfb608c14b7cf20ba1ce41287e8de496c0cd",
+          "schedule": "linear",
+          "seed": 42,
+          "steps": 2048,
+          "temperature": 1.0,
+          "torch": "2.11.0+cu130",
+          "train": {
+            "rows": 4000,
+            "sha256": "1cffb7f45f1b41042de9bac50b518a6895abbe672559c96fefd87ef988ef472d",
+            "usable": 3390
+          },
+          "train_seconds": 352.3512372999976,
+          "validation": {
+            "rows": 256,
+            "sha256": "2cefeb59d5bf522fef43d53df8d2ce94cf29b7011e3ee9043323a297667acfd6",
+            "usable": 226
+          },
+          "warmup_steps": 61,
+          "checkpoint_sha256": "1d373eda243787fbf52e929973165854c075bee01516a17a362e4ce902306bfa"
+        },
+        "ambient": {
+          "branches": {
+            "clean": 1562,
+            "matching": 486
+          },
+          "clean_probability": 0.75,
+          "device": "cuda",
+          "eval_after": {
+            "nll": 1.558178563365213,
+            "tokens": 31245
+          },
+          "eval_before": {
+            "nll": 1.2830140461634019,
+            "tokens": 31245
+          },
+          "gpu": "NVIDIA GeForce RTX 5070 Ti",
+          "learning_rate": 8e-05,
+          "max_length": 384,
+          "mode": "ambient",
+          "model": "work/models/qwen3-0.6b-base",
+          "peak_allocated_gib": 11.409031867980957,
+          "peak_reserved_gib": 12.8515625,
+          "revision": "da87bfb608c14b7cf20ba1ce41287e8de496c0cd",
+          "schedule": "linear",
+          "seed": 42,
+          "steps": 2048,
+          "temperature": 2.5,
+          "torch": "2.11.0+cu130",
+          "train": {
+            "rows": 4000,
+            "sha256": "1cffb7f45f1b41042de9bac50b518a6895abbe672559c96fefd87ef988ef472d",
+            "usable": 3390
+          },
+          "train_seconds": 319.2368840999843,
+          "validation": {
+            "rows": 256,
+            "sha256": "2cefeb59d5bf522fef43d53df8d2ce94cf29b7011e3ee9043323a297667acfd6",
+            "usable": 226
+          },
+          "warmup_steps": 61,
+          "checkpoint_sha256": "84eb3d643e67fc63da3881672a4ac5fcc4ee4ca97c1fa083a522081d9b481b85"
+        }
+      },
+      "scores": {
+        "sft": {
+          "ifeval": {
+            "n": 541,
+            "correct": 132,
+            "max_tokens_reached": 101,
+            "generated_tokens": 223069,
+            "prompt_level_loose_acc": 0.24399260628465805,
+            "prompt_level_strict_acc": 0.23475046210720887
+          },
+          "gsm8k": {
+            "n": 1319,
+            "correct": 57,
+            "max_tokens_reached": 143,
+            "generated_tokens": 139163,
+            "exact_match": 0.043214556482183475
+          }
+        },
+        "kd": {
+          "ifeval": {
+            "n": 541,
+            "correct": 119,
+            "max_tokens_reached": 111,
+            "generated_tokens": 239042,
+            "prompt_level_loose_acc": 0.2199630314232902,
+            "prompt_level_strict_acc": 0.21626617375231053
+          },
+          "gsm8k": {
+            "n": 1319,
+            "correct": 57,
+            "max_tokens_reached": 221,
+            "generated_tokens": 191592,
+            "exact_match": 0.043214556482183475
+          }
+        },
+        "ambient": {
+          "ifeval": {
+            "n": 541,
+            "correct": 100,
+            "max_tokens_reached": 94,
+            "generated_tokens": 205001,
+            "prompt_level_loose_acc": 0.18484288354898337,
+            "prompt_level_strict_acc": 0.17375231053604437
+          },
+          "gsm8k": {
+            "n": 1319,
+            "correct": 64,
+            "max_tokens_reached": 216,
+            "generated_tokens": 194829,
+            "exact_match": 0.04852160727824109
+          }
+        }
+      },
+      "paired": {
+        "kd_vs_sft": {
+          "ifeval": {
+            "delta_pp": -2.4029574861367835,
+            "wins": 46,
+            "losses": 59,
+            "mcnemar_p": 0.24143171756517745,
+            "paired_bootstrap_95_pp": [
+              -6.099815157116451,
+              1.1090573012939002
+            ]
+          },
+          "gsm8k": {
+            "delta_pp": 0.0,
+            "wins": 47,
+            "losses": 47,
+            "mcnemar_p": 1,
+            "paired_bootstrap_95_pp": [
+              -1.4404852160727823,
+              1.4404852160727823
+            ]
+          }
+        },
+        "ambient_vs_sft": {
+          "ifeval": {
+            "delta_pp": -5.914972273567468,
+            "wins": 24,
+            "losses": 56,
+            "mcnemar_p": 0.0004515172719148107,
+            "paired_bootstrap_95_pp": [
+              -9.057301293900185,
+              -2.7726432532347505
+            ]
+          },
+          "gsm8k": {
+            "delta_pp": 0.530705079605762,
+            "wins": 50,
+            "losses": 43,
+            "mcnemar_p": 0.5340598617346067,
+            "paired_bootstrap_95_pp": [
+              -0.9097801364670205,
+              1.9711902956785443
+            ]
+          }
+        },
+        "ambient_vs_kd": {
+          "ifeval": {
+            "delta_pp": -3.512014787430684,
+            "wins": 27,
+            "losses": 46,
+            "mcnemar_p": 0.034415913668175036,
+            "paired_bootstrap_95_pp": [
+              -6.654343807763401,
+              -0.5545286506469501
+            ]
+          },
+          "gsm8k": {
+            "delta_pp": 0.530705079605762,
+            "wins": 55,
+            "losses": 48,
+            "mcnemar_p": 0.5546010666648742,
+            "paired_bootstrap_95_pp": [
+              -0.9855951478392722,
+              2.047005307050796
+            ]
+          }
+        }
+      },
+      "ifeval_verifier_errors": 0
+    }
+  },
+  "aggregate": {
+    "accuracy": {
+      "sft": {
+        "ifeval": {
+          "mean_pct": 24.399260628465804,
+          "sd_pct": null,
+          "by_seed_pct": [
+            24.399260628465804
+          ]
+        },
+        "gsm8k": {
+          "mean_pct": 4.321455648218348,
+          "sd_pct": null,
+          "by_seed_pct": [
+            4.321455648218348
+          ]
+        }
+      },
+      "kd": {
+        "ifeval": {
+          "mean_pct": 21.996303142329023,
+          "sd_pct": null,
+          "by_seed_pct": [
+            21.996303142329023
+          ]
+        },
+        "gsm8k": {
+          "mean_pct": 4.321455648218348,
+          "sd_pct": null,
+          "by_seed_pct": [
+            4.321455648218348
+          ]
+        }
+      },
+      "ambient": {
+        "ifeval": {
+          "mean_pct": 18.484288354898336,
+          "sd_pct": null,
+          "by_seed_pct": [
+            18.484288354898336
+          ]
+        },
+        "gsm8k": {
+          "mean_pct": 4.852160727824109,
+          "sd_pct": null,
+          "by_seed_pct": [
+            4.852160727824109
+          ]
+        }
+      }
+    },
+    "paired_seed_differences": {
+      "kd_vs_sft": {
+        "ifeval": {
+          "mean_pp": -2.4029574861367835,
+          "sd_pp": null,
+          "by_seed_pp": [
+            -2.4029574861367835
+          ],
+          "positive_seed_count": 0,
+          "negative_seed_count": 1
+        },
+        "gsm8k": {
+          "mean_pp": 0.0,
+          "sd_pp": null,
+          "by_seed_pp": [
+            0.0
+          ],
+          "positive_seed_count": 0,
+          "negative_seed_count": 0
+        }
+      },
+      "ambient_vs_sft": {
+        "ifeval": {
+          "mean_pp": -5.914972273567468,
+          "sd_pp": null,
+          "by_seed_pp": [
+            -5.914972273567468
+          ],
+          "positive_seed_count": 0,
+          "negative_seed_count": 1
+        },
+        "gsm8k": {
+          "mean_pp": 0.530705079605762,
+          "sd_pp": null,
+          "by_seed_pp": [
+            0.530705079605762
+          ],
+          "positive_seed_count": 1,
+          "negative_seed_count": 0
+        }
+      },
+      "ambient_vs_kd": {
+        "ifeval": {
+          "mean_pp": -3.512014787430684,
+          "sd_pp": null,
+          "by_seed_pp": [
+            -3.512014787430684
+          ],
+          "positive_seed_count": 0,
+          "negative_seed_count": 1
+        },
+        "gsm8k": {
+          "mean_pp": 0.530705079605762,
+          "sd_pp": null,
+          "by_seed_pp": [
+            0.530705079605762
+          ],
+          "positive_seed_count": 1,
+          "negative_seed_count": 0
+        }
+      }
+    }
+  }
+}

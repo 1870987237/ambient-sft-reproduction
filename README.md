@@ -42,6 +42,7 @@ The MIT license covers this repository's implementation. The model and dataset c
 
 - [IFEval output-budget check](docs/experiments/ifeval-output-budget.md) compares 512 and 2,048 output tokens on the original checkpoints.
 - [Local benchmark protocol](docs/experiments/local-benchmark-protocol.md) gives the pinned data, training commands, and evaluation setup.
+- [2,048-step comparison](docs/experiments/ambient-sft-2048.md) reports the full benchmark scores for completed seeds.
 - [Experiment progress](PLAN.md) records the larger same-condition comparison as seed results are validated.
 
 For larger samples, pass `--parquet path/to/train-shard.parquet` to `scripts/prepare_dolci.py` to read a local Dolci shard with PyArrow. The flag can be repeated to read multiple shards in order.
