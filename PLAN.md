@@ -1,12 +1,12 @@
 # Ambient SFT experiment progress
 
-Updated 2026-11-24 21:44 +08:00
+Updated 2026-11-24 22:08 +08:00
 
 - [x] Re-evaluate IFEval at 512 output tokens using the three existing checkpoints and compare against their 2,048-token results.
 - [x] Prepare one fixed Dolci train and holdout split for the larger comparison.
-- [~] Train SFT, T=1 distillation, and T=2.5 Ambient SFT for 2,048 steps each at seeds 42, 43, and 44. Seeds 42 and 43 are complete and seed 44 is training.
-- [ ] Score all checkpoints on the full IFEval and GSM8K benchmarks, then summarize results across seeds.
-- [ ] Verify and publish the aggregate experiment results.
+- [x] Train SFT, T=1 distillation, and T=2.5 Ambient SFT for 2,048 steps each at seeds 42, 43, and 44.
+- [x] Score all checkpoints on the full IFEval and GSM8K benchmarks, then summarize results across seeds.
+- [x] Verify and publish the aggregate experiment results.
 
 The larger comparison uses Qwen3-0.6B-Base, a 384-token training limit, one example per update, and the same linear learning-rate schedule across all conditions. Within each seed, the two teacher-based runs share the same branch draws. IFEval uses the paper's 2,048-token budget for the primary comparison and GSM8K uses eight fixed examples with a 512-token budget.
 
@@ -19,3 +19,5 @@ The larger comparison uses Qwen3-0.6B-Base, a 384-token training limit, one exam
 - 2026-11-24 21:02 +08:00 — Compared the two IFEval runs prompt by prompt and recorded how often the shorter output matched the longer output's prefix. Seed 42 SFT completed 2,048 steps and produced its checkpoint.
 - 2026-11-24 21:19 +08:00 — Completed training and full benchmark scoring for all three methods at seed 42. Started seed 43 and recorded the first seed in the expanded results.
 - 2026-11-24 21:44 +08:00 — Completed seed 43 and added it to the benchmark comparison. Started the third and final seed.
+- 2026-11-24 22:00 +08:00 — All nine training checkpoints are saved. Started the final seed's benchmark generation.
+- 2026-11-24 22:08 +08:00 — Finished and verified all nine full benchmark runs. The final report includes mean scores, per-seed deltas, matching branch schedules, and checkpoints verified by SHA-256.
