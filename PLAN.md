@@ -1,6 +1,6 @@
 # Ambient SFT experiment progress
 
-Updated 2026-11-24 23:02 +08:00
+Updated 2026-11-24 23:18 +08:00
 
 - [x] Re-evaluate IFEval at 512 output tokens using the three existing checkpoints and compare against their 2,048-token results.
 - [x] Prepare one fixed Dolci train and holdout split for the larger comparison.
@@ -14,8 +14,8 @@ The larger comparison uses Qwen3-0.6B-Base, a 384-token training limit, one exam
 
 - [x] Benchmark the original Qwen3-1.7B-Base checkpoint on IFEval and GSM8K.
 - [x] Verify the single-GPU full-parameter training path with BF16 weights, 8-bit AdamW state, and a frozen CPU teacher.
-- [~] Train and evaluate SFT, T=1 distillation, and T=2.5 Ambient SFT for 2,048 updates each at seed 42. SFT and T=1 are complete and Ambient SFT is training.
-- [ ] Verify and publish the full comparison and its relationship to the prior 0.6B results and the paper's baselines.
+- [x] Train and evaluate SFT, T=1 distillation, and T=2.5 Ambient SFT for 2,048 updates each at seed 42.
+- [x] Verify and publish the full comparison and its relationship to the prior 0.6B results and the paper's baselines.
 
 The three 1.7B runs reuse the pinned 4,000/256 Dolci split, 384-token limit, one example per update, and linear schedule from the completed 0.6B comparison. They use the same 8-bit optimizer and BF16 weights across all three conditions.
 
@@ -34,3 +34,4 @@ The three 1.7B runs reuse the pinned 4,000/256 Dolci split, 384-token limit, one
 - 2026-11-24 22:34 +08:00 — The 1.7B base scored 34.38% on IFEval and 52.24% on GSM8K. The full-parameter runner passed both branches and held-out evaluation in a 12-step CUDA test. Started the 2,048-step comparison.
 - 2026-11-24 22:48 +08:00 — SFT finished and scored 47.32% on IFEval and 52.31% on GSM8K. The T=1 full-parameter run is active.
 - 2026-11-24 23:02 +08:00 — T=1 finished and scored 38.26% on IFEval and 57.39% on GSM8K. The T=2.5 full-parameter run is active.
+- 2026-11-24 23:18 +08:00 — Finished T=2.5 and verified all four full benchmark runs. Ambient SFT scored 35.49% on IFEval and 56.94% on GSM8K. The two matching runs used identical branch schedules.
