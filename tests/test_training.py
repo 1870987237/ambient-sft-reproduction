@@ -1,13 +1,33 @@
 import random
 import unittest
+from types import SimpleNamespace
 
 import torch
 import torch.nn.functional as F
 
-from scripts.train import causal_targets, matching_loss, supervised_logits, use_matching
+from scripts.train import causal_targets, matching_loss, reference_logits, supervised_logits, use_matching
 
 
 class AmbientSFTTests(unittest.TestCase):
+    def test_host_teacher_returns_the_same_logits_and_stays_frozen(self):
+        class TinyTeacher(torch.nn.Module):
+            def __init__(self):
+                super().__init__()
+                self.embedding = torch.nn.Embedding(5, 5)
+                self.register_buffer("bias", torch.randn(5))
+
+            def forward(self, tokens, use_cache=False):
+                return SimpleNamespace(logits=self.embedding(tokens) + self.bias)
+
+        teacher = TinyTeacher().eval().requires_grad_(False)
+        tokens = torch.tensor([[1, 2, 3]])
+        mask, _ = causal_targets(torch.tensor([[-100, -100, 3]]))
+        resident = reference_logits(teacher, tokens, mask)
+        offloaded = reference_logits(teacher, tokens, mask, offload=True)
+        torch.testing.assert_close(resident, offloaded)
+        self.assertFalse(offloaded.requires_grad)
+        self.assertEqual(teacher.embedding.weight.device.type, "cpu")
+
     def test_causal_shift_and_supervision(self):
         logits = torch.arange(24, dtype=torch.float32).reshape(1, 4, 6).requires_grad_()
         labels = torch.tensor([[-100, -100, 2, -100]])

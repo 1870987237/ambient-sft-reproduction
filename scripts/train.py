@@ -77,6 +77,21 @@ def matching_loss(student_logits, teacher_logits, temperature):
     return -(teacher_probs * student_log_probs).sum(dim=-1).mean()
 
 
+@torch.no_grad()
+def reference_logits(teacher, tokens, mask, offload=False):
+    if offload:
+        # Keep the original frozen tensors on the host and discard the GPU views
+        # after the forward pass. The teacher needs no copy back to the host.
+        parameters = {name: value.to(tokens.device, non_blocking=True)
+                      for name, value in teacher.named_parameters()}
+        buffers = {name: value.to(tokens.device, non_blocking=True)
+                   for name, value in teacher.named_buffers()}
+        outputs = torch.func.functional_call(teacher, (parameters, buffers), (tokens,), {"use_cache": False})
+    else:
+        outputs = teacher(tokens, use_cache=False)
+    return supervised_logits(outputs.logits, mask)
+
+
 def use_matching(clean_probability, branch_rng):
     return clean_probability < 1 and branch_rng.random() >= clean_probability
 
@@ -124,6 +139,7 @@ def parse_args():
     parser.add_argument("--max-length", type=int, default=256)
     parser.add_argument("--learning-rate", type=float, default=8e-5)
     parser.add_argument("--schedule", choices=("constant", "linear"), default="constant")
+    parser.add_argument("--low-vram", action="store_true", help="BF16 full weights, 8-bit AdamW, and a CPU teacher")
     parser.add_argument("--seed", type=int, default=42)
     parser.add_argument("--save-dir", type=Path)
     args = parser.parse_args()
@@ -137,6 +153,8 @@ def parse_args():
         parser.error("train and evaluation files must be different")
     if args.save_dir is not None and args.save_dir.exists():
         parser.error("save-dir must be a new directory")
+    if args.low_vram and args.device != "cuda":
+        parser.error("low-vram requires CUDA")
     return args
 
 
@@ -163,18 +181,25 @@ def main():
     probability = args.clean_probability if args.mode == "ambient" else 1.0
     if device.type == "cuda":
         torch.cuda.reset_peak_memory_stats()
+    student_dtype = torch.bfloat16 if args.low_vram else torch.float32
     student = AutoModelForCausalLM.from_pretrained(
-        args.model, revision=revision, dtype=torch.float32, attn_implementation="sdpa",
+        args.model, revision=revision, dtype=student_dtype, attn_implementation="sdpa",
     ).to(device)
     teacher = None
+    teacher_device = torch.device("cpu") if args.low_vram else device
     if probability < 1:
         teacher_dtype = torch.bfloat16 if device.type == "cuda" else torch.float32
         teacher = AutoModelForCausalLM.from_pretrained(
             args.model, revision=revision, dtype=teacher_dtype, attn_implementation="sdpa",
-        ).to(device).eval().requires_grad_(False)
-    optimizer = torch.optim.AdamW(
-        student.parameters(), lr=args.learning_rate, betas=(0.9, 0.95), weight_decay=0, foreach=False,
-    )
+        ).to(teacher_device).eval().requires_grad_(False)
+    optimizer_kwargs = dict(lr=args.learning_rate, betas=(0.9, 0.95), weight_decay=0)
+    if args.low_vram:
+        from bitsandbytes.optim import AdamW8bit
+
+        student.gradient_checkpointing_enable(gradient_checkpointing_kwargs={"use_reentrant": False})
+        optimizer = AdamW8bit(student.parameters(), **optimizer_kwargs)
+    else:
+        optimizer = torch.optim.AdamW(student.parameters(), foreach=False, **optimizer_kwargs)
     warmup_steps = int(0.03 * args.steps) if args.schedule == "linear" else 0
     scheduler = None
     if args.schedule == "linear":
@@ -189,14 +214,13 @@ def main():
         tokens, labels = (tensor.to(device) for tensor in next(examples))
         mask, targets = causal_targets(labels)
         optimizer.zero_grad(set_to_none=True)
+        matching = teacher is not None and use_matching(probability, branch_rng)
+        reference = reference_logits(teacher, tokens, mask, args.low_vram) if matching else None
         with autocast(device):
             logits = supervised_logits(student(tokens, use_cache=False).logits, mask)
-        if teacher is not None and use_matching(probability, branch_rng):
+        if matching:
             branch = "matching"
-            with torch.no_grad():
-                reference = supervised_logits(teacher(tokens, use_cache=False).logits, mask)
             loss = matching_loss(logits, reference, args.temperature)
-            del reference
         else:
             branch = "clean"
             loss = F.cross_entropy(logits, targets)
@@ -213,7 +237,7 @@ def main():
             "step": step, "branch": branch, "loss": loss.item(), "tokens": targets.numel(),
             "learning_rate": learning_rate,
         }), flush=True)
-        del logits, loss
+        del logits, loss, reference
 
     elapsed = time.perf_counter() - started
     optimizer.zero_grad(set_to_none=True)
@@ -223,6 +247,9 @@ def main():
     summary = {
         "mode": args.mode, "model": args.model, "revision": revision, "seed": args.seed,
         "device": str(device), "torch": torch.__version__, "max_length": args.max_length,
+        "optimizer": type(optimizer).__name__, "student_dtype": str(student_dtype),
+        "gradient_checkpointing": args.low_vram,
+        "teacher_device": str(teacher_device) if teacher is not None else None,
         "steps": args.steps, "learning_rate": args.learning_rate,
         "schedule": args.schedule, "warmup_steps": warmup_steps,
         "temperature": args.temperature, "clean_probability": probability,

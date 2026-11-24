@@ -106,20 +106,27 @@ def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("output_root", type=Path)
     parser.add_argument("--task", choices=("ifeval", "gsm8k", "both"), default="both")
+    parser.add_argument("--conditions", nargs="+", choices=("base", "sft", "kd", "ambient"),
+                        default=("sft", "kd", "ambient"))
     args = parser.parse_args()
+    if len(args.conditions) != len(set(args.conditions)):
+        parser.error("conditions must be unique")
     tasks = ("ifeval", "gsm8k") if args.task == "both" else (args.task,)
     examples = {task: read_jsonl(DATA / f"{task}.jsonl") for task in tasks}
     verifier, errors = load_instruction_verifier() if "ifeval" in tasks else (None, None)
     random.seed(0)
     all_scores, all_checks = {}, {}
-    for condition in ("sft", "kd", "ambient"):
+    for condition in args.conditions:
         all_scores[condition], all_checks[condition] = score(args.output_root / condition, examples, verifier)
         print(condition, json.dumps(all_scores[condition]), flush=True)
     if errors is not None and errors.errors:
         raise RuntimeError(f"{len(errors.errors)} IFEval verifier errors; first: {errors.errors[0]}")
     comparisons = {}
     benchmark_metrics = {"ifeval": "prompt_level_loose_acc", "gsm8k": "exact_match"}
-    for first, second in (("sft", "kd"), ("sft", "ambient"), ("kd", "ambient")):
+    for first, second in (("base", "sft"), ("base", "kd"), ("base", "ambient"),
+                          ("sft", "kd"), ("sft", "ambient"), ("kd", "ambient")):
+        if first not in all_checks or second not in all_checks:
+            continue
         comparisons[f"{second}_vs_{first}"] = {
             task: paired(all_checks[first][task], all_checks[second][task], benchmark_metrics[task])
             for task in tasks

@@ -1,6 +1,6 @@
 # Ambient SFT experiment progress
 
-Updated 2026-11-24 22:08 +08:00
+Updated 2026-11-24 22:34 +08:00
 
 - [x] Re-evaluate IFEval at 512 output tokens using the three existing checkpoints and compare against their 2,048-token results.
 - [x] Prepare one fixed Dolci train and holdout split for the larger comparison.
@@ -9,6 +9,15 @@ Updated 2026-11-24 22:08 +08:00
 - [x] Verify and publish the aggregate experiment results.
 
 The larger comparison uses Qwen3-0.6B-Base, a 384-token training limit, one example per update, and the same linear learning-rate schedule across all conditions. Within each seed, the two teacher-based runs share the same branch draws. IFEval uses the paper's 2,048-token budget for the primary comparison and GSM8K uses eight fixed examples with a 512-token budget.
+
+## Qwen3-1.7B full-parameter comparison
+
+- [x] Benchmark the original Qwen3-1.7B-Base checkpoint on IFEval and GSM8K.
+- [x] Verify the single-GPU full-parameter training path with BF16 weights, 8-bit AdamW state, and a frozen CPU teacher.
+- [~] Train and evaluate SFT, T=1 distillation, and T=2.5 Ambient SFT for 2,048 updates each at seed 42.
+- [ ] Verify and publish the full comparison and its relationship to the prior 0.6B results and the paper's baselines.
+
+The three 1.7B runs reuse the pinned 4,000/256 Dolci split, 384-token limit, one example per update, and linear schedule from the completed 0.6B comparison. They use the same 8-bit optimizer and BF16 weights across all three conditions.
 
 ## Progress log
 
@@ -21,3 +30,5 @@ The larger comparison uses Qwen3-0.6B-Base, a 384-token training limit, one exam
 - 2026-11-24 21:44 +08:00 — Completed seed 43 and added it to the benchmark comparison. Started the third and final seed.
 - 2026-11-24 22:00 +08:00 — All nine training checkpoints are saved. Started the final seed's benchmark generation.
 - 2026-11-24 22:08 +08:00 — Finished and verified all nine full benchmark runs. The final report includes mean scores, per-seed deltas, matching branch schedules, and checkpoints verified by SHA-256.
+- 2026-11-24 22:29 +08:00 — Started the independent 1.7B base evaluation and prepared the full-parameter single-GPU run.
+- 2026-11-24 22:34 +08:00 — The 1.7B base scored 34.38% on IFEval and 52.24% on GSM8K. The full-parameter runner passed both branches and held-out evaluation in a 12-step CUDA test. Started the 2,048-step comparison.

@@ -43,6 +43,9 @@ The MIT license covers this repository's implementation. The model and dataset c
 - [IFEval output-budget check](docs/experiments/ifeval-output-budget.md) compares 512 and 2,048 output tokens on the original checkpoints.
 - [Local benchmark protocol](docs/experiments/local-benchmark-protocol.md) gives the pinned data, training commands, and evaluation setup.
 - [2,048-step comparison](docs/experiments/ambient-sft-2048.md) reports the full benchmark scores for completed seeds.
+- [Qwen3-1.7B results](docs/experiments/qwen3-1.7b-results.md) tracks the base checkpoint and the three low-VRAM full-parameter runs.
 - [Experiment progress](PLAN.md) records the larger same-condition comparison as seed results are validated.
 
 For larger samples, pass `--parquet path/to/train-shard.parquet` to `scripts/prepare_dolci.py` to read a local Dolci shard with PyArrow. The flag can be repeated to read multiple shards in order.
+
+For the 1.7B full-parameter comparison, install `bitsandbytes` in the CUDA training environment and run `scripts/train.py` with `--low-vram`. This uses BF16 student weights, 8-bit AdamW state, and activation checkpointing. The frozen teacher stays in RAM and a transient GPU copy produces reference logits on matching steps. The three conditions use the same memory and optimizer settings.

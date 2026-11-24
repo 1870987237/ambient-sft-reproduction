@@ -1,0 +1,31 @@
+{
+  "model": "Qwen/Qwen3-1.7B-Base",
+  "revision": "ea980cb0a6c2ae4b936e82123acc929f1cec04c1",
+  "seed": 42,
+  "base_checkpoint_sha256": "6df85b39330e5a425ee36253d0f894e4387e4f0a15b9c53cb467d668e6b3a841",
+  "completed_conditions": [
+    "base"
+  ],
+  "training": {},
+  "scores": {
+    "base": {
+      "ifeval": {
+        "n": 541,
+        "correct": 186,
+        "max_tokens_reached": 127,
+        "generated_tokens": 329024,
+        "prompt_level_loose_acc": 0.3438077634011091,
+        "prompt_level_strict_acc": 0.32162661737523107
+      },
+      "gsm8k": {
+        "n": 1319,
+        "correct": 689,
+        "max_tokens_reached": 1,
+        "generated_tokens": 115394,
+        "exact_match": 0.5223654283548143
+      }
+    }
+  },
+  "paired": {},
+  "ifeval_verifier_errors": 0
+}
