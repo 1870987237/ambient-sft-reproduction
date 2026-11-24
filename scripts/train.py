@@ -123,6 +123,7 @@ def parse_args():
     parser.add_argument("--steps", type=int, default=12)
     parser.add_argument("--max-length", type=int, default=256)
     parser.add_argument("--learning-rate", type=float, default=8e-5)
+    parser.add_argument("--schedule", choices=("constant", "linear"), default="constant")
     parser.add_argument("--seed", type=int, default=42)
     parser.add_argument("--save-dir", type=Path)
     args = parser.parse_args()
@@ -140,7 +141,7 @@ def parse_args():
 
 
 def main():
-    from transformers import AutoModelForCausalLM, AutoTokenizer
+    from transformers import AutoModelForCausalLM, AutoTokenizer, get_linear_schedule_with_warmup
 
     args = parse_args()
     device = torch.device(args.device)
@@ -174,6 +175,10 @@ def main():
     optimizer = torch.optim.AdamW(
         student.parameters(), lr=args.learning_rate, betas=(0.9, 0.95), weight_decay=0, foreach=False,
     )
+    warmup_steps = int(0.03 * args.steps) if args.schedule == "linear" else 0
+    scheduler = None
+    if args.schedule == "linear":
+        scheduler = get_linear_schedule_with_warmup(optimizer, warmup_steps, args.steps)
     before = evaluate(student, validation, device)
     student.train()
     counts = {"clean": 0, "matching": 0}
@@ -199,9 +204,15 @@ def main():
             raise FloatingPointError(f"Nonfinite {branch} loss at step {step}")
         loss.backward()
         torch.nn.utils.clip_grad_norm_(student.parameters(), 1.0, error_if_nonfinite=True)
+        learning_rate = optimizer.param_groups[0]["lr"]
         optimizer.step()
+        if scheduler is not None:
+            scheduler.step()
         counts[branch] += 1
-        print(json.dumps({"step": step, "branch": branch, "loss": loss.item(), "tokens": targets.numel()}), flush=True)
+        print(json.dumps({
+            "step": step, "branch": branch, "loss": loss.item(), "tokens": targets.numel(),
+            "learning_rate": learning_rate,
+        }), flush=True)
         del logits, loss
 
     elapsed = time.perf_counter() - started
@@ -213,6 +224,7 @@ def main():
         "mode": args.mode, "model": args.model, "revision": revision, "seed": args.seed,
         "device": str(device), "torch": torch.__version__, "max_length": args.max_length,
         "steps": args.steps, "learning_rate": args.learning_rate,
+        "schedule": args.schedule, "warmup_steps": warmup_steps,
         "temperature": args.temperature, "clean_probability": probability,
         "branches": counts, "train": train_info, "validation": validation_info,
         "eval_before": before, "eval_after": after, "train_seconds": elapsed,
