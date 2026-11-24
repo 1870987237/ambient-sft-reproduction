@@ -37,3 +37,10 @@ The three runs used the pinned base checkpoint on an RTX 5070 Ti with PyTorch 2.
 All three runs increased NLL on this tiny held-out split. The check exercised each training path and measured memory use. Input file SHA-256 values for this check are `6a99c185deeec274b0c09b60ac2c8f981ecd1883cfaaf5ce898b32c374feeea3` (train) and `2621b06e2804211a87482504f034efc9ae0dbd231867a4b6c2d6a65d41a70ca2` (held-out).
 
 The MIT license covers this repository's implementation. The model and dataset come from their respective publishers and are fetched separately.
+
+## Follow-up experiments
+
+- [IFEval output-budget check](docs/experiments/ifeval-output-budget.md) compares 512 and 2,048 output tokens on the original checkpoints.
+- [Experiment progress](PLAN.md) records the larger same-condition comparison as seed results are validated.
+
+For larger samples, pass `--parquet path/to/train-shard.parquet` to `scripts/prepare_dolci.py` to read a local Dolci shard with PyArrow. The flag can be repeated to read multiple shards in order.

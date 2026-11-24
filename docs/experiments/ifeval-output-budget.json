@@ -1,0 +1,160 @@
+{
+  "model": "Qwen/Qwen3-0.6B-Base",
+  "training_seed": 42,
+  "training_steps": 512,
+  "backend": "vLLM 0.21.0 with FlashAttention and greedy decoding",
+  "metric": "prompt_level_loose_acc",
+  "scores_by_max_generated_tokens": {
+    "512": {
+      "sft": {
+        "n": 541,
+        "correct": 70,
+        "max_tokens_reached": 42,
+        "generated_tokens": 41996,
+        "prompt_level_loose_acc": 0.12939001848428835,
+        "prompt_level_strict_acc": 0.12199630314232902
+      },
+      "kd": {
+        "n": 541,
+        "correct": 77,
+        "max_tokens_reached": 105,
+        "generated_tokens": 72199,
+        "prompt_level_loose_acc": 0.1423290203327172,
+        "prompt_level_strict_acc": 0.12754158964879853
+      },
+      "ambient": {
+        "n": 541,
+        "correct": 80,
+        "max_tokens_reached": 217,
+        "generated_tokens": 142883,
+        "prompt_level_loose_acc": 0.1478743068391867,
+        "prompt_level_strict_acc": 0.12754158964879853
+      }
+    },
+    "2048": {
+      "sft": {
+        "n": 541,
+        "correct": 70,
+        "max_tokens_reached": 42,
+        "generated_tokens": 106508,
+        "prompt_level_loose_acc": 0.12939001848428835,
+        "prompt_level_strict_acc": 0.12199630314232902
+      },
+      "kd": {
+        "n": 541,
+        "correct": 79,
+        "max_tokens_reached": 104,
+        "generated_tokens": 232357,
+        "prompt_level_loose_acc": 0.14602587800369685,
+        "prompt_level_strict_acc": 0.13123844731977818
+      },
+      "ambient": {
+        "n": 541,
+        "correct": 88,
+        "max_tokens_reached": 214,
+        "generated_tokens": 470222,
+        "prompt_level_loose_acc": 0.16266173752310537,
+        "prompt_level_strict_acc": 0.14048059149722736
+      }
+    }
+  },
+  "paired_differences_by_budget": {
+    "512": {
+      "kd_vs_sft": {
+        "delta_pp": 1.2939001848428837,
+        "wins": 40,
+        "losses": 33,
+        "mcnemar_p": 0.4827885568440213,
+        "paired_bootstrap_95_pp": [
+          -1.8484288354898337,
+          4.436229205175601
+        ]
+      },
+      "ambient_vs_sft": {
+        "delta_pp": 1.8484288354898337,
+        "wins": 39,
+        "losses": 29,
+        "mcnemar_p": 0.2749903961710005,
+        "paired_bootstrap_95_pp": [
+          -1.1090573012939002,
+          4.805914972273567
+        ]
+      },
+      "ambient_vs_kd": {
+        "delta_pp": 0.5545286506469501,
+        "wins": 46,
+        "losses": 43,
+        "mcnemar_p": 0.8322577540225787,
+        "paired_bootstrap_95_pp": [
+          -2.7726432532347505,
+          4.066543438077634
+        ]
+      }
+    },
+    "2048": {
+      "kd_vs_sft": {
+        "delta_pp": 1.6635859519408502,
+        "wins": 42,
+        "losses": 33,
+        "mcnemar_p": 0.3556992390814875,
+        "paired_bootstrap_95_pp": [
+          -1.478743068391867,
+          4.805914972273567
+        ]
+      },
+      "ambient_vs_sft": {
+        "delta_pp": 3.3271719038817005,
+        "wins": 47,
+        "losses": 29,
+        "mcnemar_p": 0.05045241024721763,
+        "paired_bootstrap_95_pp": [
+          0.18484288354898337,
+          6.469500924214418
+        ]
+      },
+      "ambient_vs_kd": {
+        "delta_pp": 1.6635859519408502,
+        "wins": 49,
+        "losses": 40,
+        "mcnemar_p": 0.39657015814551616,
+        "paired_bootstrap_95_pp": [
+          -1.6635859519408502,
+          5.175600739371535
+        ]
+      }
+    }
+  },
+  "512_vs_2048_paired_by_condition": {
+    "sft": {
+      "delta_pp": 0.0,
+      "wins": 1,
+      "losses": 1,
+      "mcnemar_p": 1,
+      "paired_bootstrap_95_pp": [
+        -0.5545286506469501,
+        0.5545286506469501
+      ]
+    },
+    "kd": {
+      "delta_pp": -0.36968576709796674,
+      "wins": 1,
+      "losses": 3,
+      "mcnemar_p": 0.625,
+      "paired_bootstrap_95_pp": [
+        -1.1090573012939002,
+        0.36968576709796674
+      ]
+    },
+    "ambient": {
+      "delta_pp": -1.478743068391867,
+      "wins": 3,
+      "losses": 11,
+      "mcnemar_p": 0.057373046875,
+      "paired_bootstrap_95_pp": [
+        -2.957486136783734,
+        -0.18484288354898337
+      ]
+    }
+  },
+  "verifier_errors": 0
+}
