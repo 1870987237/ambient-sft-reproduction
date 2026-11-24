@@ -10,4 +10,6 @@ The three Qwen3-0.6B-Base checkpoints were trained with seed 42. This comparison
 
 Ambient SFT passed 10 more prompts than SFT at 512 tokens and 18 more at 2,048 tokens. The paired 95% item-bootstrap interval for its margin over SFT at 512 tokens was −1.11 to +4.81 percentage points. The margin was smaller at the shorter budget in this checkpoint comparison. Estimates use one training seed.
 
+The 512-token response was an exact text prefix of the 2,048-token response on 540 of 541 prompts for SFT and T=1 distillation, and on 392 of 541 for Ambient SFT. Of the eight net prompts Ambient SFT lost at the shorter budget, four came from same-prefix responses and four came from responses with different text prefixes. The comparison measures separate generation runs at each budget.
+
 All three checkpoint outputs and ground-truth IDs were matched before scoring. Full aggregate counts and paired differences are in [the result JSON](ifeval-output-budget.json).

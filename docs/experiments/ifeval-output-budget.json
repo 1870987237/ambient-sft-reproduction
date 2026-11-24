@@ -156,5 +156,28 @@
       ]
     }
   },
-  "verifier_errors": 0
+  "verifier_errors": 0,
+  "completion_agreement": {
+    "sft": {
+      "2048_run_completions_under_512_tokens": 499,
+      "identical_among_under_512": 499,
+      "512_run_text_is_prefix_of_2048_run": 540,
+      "prompt_pass_change_same_prefix": 0,
+      "prompt_pass_change_different_prefix": 0
+    },
+    "kd": {
+      "2048_run_completions_under_512_tokens": 436,
+      "identical_among_under_512": 436,
+      "512_run_text_is_prefix_of_2048_run": 540,
+      "prompt_pass_change_same_prefix": -2,
+      "prompt_pass_change_different_prefix": 0
+    },
+    "ambient": {
+      "2048_run_completions_under_512_tokens": 326,
+      "identical_among_under_512": 251,
+      "512_run_text_is_prefix_of_2048_run": 392,
+      "prompt_pass_change_same_prefix": -4,
+      "prompt_pass_change_different_prefix": -4
+    }
+  }
 }
